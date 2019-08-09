@@ -19,7 +19,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
     render() {
-        const width = (this.props.cols * 16);
+        const width = this.props.cols * 14;
         var rowsArr = [];
 
         var boxClass = "";
@@ -30,7 +30,7 @@ class Grid extends React.Component {
 
                 boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
                 rowsArr.push(
-                    <box
+                    <Box
                         boxClass={boxClass}
                         key={boxId}
                         boxId={boxId}
@@ -64,8 +64,37 @@ class Main extends React.Component {
 
         }
     }
-    selectionBox = (row, col) => {
+    selectBox = (row, col) => {
 let gridCopy = arrayClone(this.state.gridFull);
+gridCopy[row][col] = !gridCopy[row][col];
+this.setState({
+    gridFull:gridCopy
+})
+    }
+
+    seed = () => {
+        let gridCopy = arrayClone(this.state.gridFull);
+        for(let i =0; i < this.rows; i++){
+            for (let  j = 0; j < this.rows; j++){
+                    if(Math.floor(Math.random() * 4 === 1)) {
+                        gridCopy[i][j]= true;
+                    }
+            }
+        }
+        this.setStateP({
+            gridFull:gridCopy
+        });
+    }
+
+    playButton = () => {
+        clearInterval(this.intervalId)
+        this.intervalId = setInterval(this.play, this.speed);
+
+    }
+    play = () => {
+let g = this.state.gridFull;
+let g2 = arraayClone(this.state.gridFull);
+
     }
     render() {
         return (
